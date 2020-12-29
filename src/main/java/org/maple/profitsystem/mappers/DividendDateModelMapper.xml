@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.maple.profitsystem.mappers.DividendDateModelMapper">
+  <resultMap id="BaseResultMap" type="org.maple.profitsystem.models.DividendDateModel">
+
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="symbol" jdbcType="VARCHAR" property="symbol" />
+    <result column="report_date" jdbcType="INTEGER" property="reportDate" />
+    <result column="time" jdbcType="VARCHAR" property="time" />
+  </resultMap>
+  
+  <insert id="insertNoConflict" parameterType="org.maple.profitsystem.models.EarningDateModel">
+    insert into dividend_date(symbol, report_date)
+    values(
+    	#{symbol,jdbcType=VARCHAR},
+		#{reportDate,jdbcType=INTEGER}
+    	)
+    ON CONFLICT ON CONSTRAINT dividend_date_pk DO NOTHING
+  </insert>
+  
+</mapper>

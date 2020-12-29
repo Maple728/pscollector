@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.maple.profitsystem.mappers.OIModelMapper">
+  <resultMap id="BaseResultMap" type="org.maple.profitsystem.models.OIModel">
+
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="company_id" jdbcType="BIGINT" property="companyId" />
+    <result column="call_put" jdbcType="CHAR" property="callPut" />
+    <result column="strike" jdbcType="DOUBLE" property="strike" />
+    <result column="expiration" jdbcType="INTEGER" property="expiration" />
+    <result column="oi_date" jdbcType="INTEGER" property="oiDate" />
+    <result column="open" jdbcType="DOUBLE" property="open" />
+    <result column="close" jdbcType="DOUBLE" property="close" />
+    <result column="high" jdbcType="DOUBLE" property="high" />
+    <result column="low" jdbcType="DOUBLE" property="low" />
+    <result column="volume" jdbcType="INTEGER" property="volume" />
+    <result column="oi" jdbcType="INTEGER" property="oi" />
+  </resultMap>
+  <insert id="upsert" keyColumn="id" keyProperty="id" parameterType="org.maple.profitsystem.models.OIModel" useGeneratedKeys="true">
+    insert into open_interest(company_id, call_put, strike, expiration, oi_date, open, high, low, close, volume, oi)
+    values(
+    	#{companyId,jdbcType=BIGINT},
+		#{callPut,jdbcType=CHAR},
+		#{strike,jdbcType=DOUBLE},
+		#{expiration,jdbcType=INTEGER},
+    	#{oiDate,jdbcType=INTEGER}, 
+    	#{open,jdbcType=DOUBLE},
+    	#{high,jdbcType=DOUBLE}, 
+    	#{low,jdbcType=DOUBLE}, 
+    	#{close,jdbcType=DOUBLE}, 
+    	#{volume,jdbcType=INTEGER},
+    	#{oi,jdbcType=INTEGER}
+    	)
+    ON CONFLICT ON CONSTRAINT open_interest_unique DO UPDATE SET open = #{open,jdbcType=DOUBLE}
+    	, high = #{high,jdbcType=DOUBLE}
+    	, low = #{low,jdbcType=DOUBLE}
+    	, close = #{close,jdbcType=DOUBLE}
+    	, volume = #{volume,jdbcType=INTEGER}
+    	, oi = #{oi,jdbcType=INTEGER}
+  </insert>
+</mapper>

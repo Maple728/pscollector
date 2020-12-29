@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.maple.profitsystem.mappers.EarningDateModelMapper">
+  <resultMap id="BaseResultMap" type="org.maple.profitsystem.models.EarningDateModel">
+
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="symbol" jdbcType="VARCHAR" property="symbol" />
+    <result column="report_date" jdbcType="INTEGER" property="reportDate" />
+    <result column="time" jdbcType="VARCHAR" property="time" />
+  </resultMap>
+  
+  
+  
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.maple.profitsystem.models.EarningDateModel" useGeneratedKeys="true">
+    insert into earning_date(symbol, report_date, time)
+    values(
+    	#{symbol,jdbcType=VARCHAR},
+		#{reportDate,jdbcType=INTEGER},
+		#{time,jdbcType=VARCHAR}
+    	)
+  </insert>
+  
+  <delete id="deleteById" parameterType="java.lang.Long">
+  	DELETE FROM earning_date
+  	WHERE id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <select id="selectLastBySymbol" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	SELECT *
+  	FROM earning_date
+  	WHERE symbol = #{symbol,jdbcType=VARCHAR}
+  	ORDER BY report_date DESC
+  	LIMIT 1
+  </select>
+</mapper>
