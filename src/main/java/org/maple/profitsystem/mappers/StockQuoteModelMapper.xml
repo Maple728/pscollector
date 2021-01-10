@@ -28,7 +28,9 @@
     values (#{companyId,jdbcType=BIGINT}, #{quoteDate,jdbcType=INTEGER}, #{open,jdbcType=DOUBLE}, 
       #{close,jdbcType=DOUBLE}, #{high,jdbcType=DOUBLE}, #{low,jdbcType=DOUBLE}, #{volume,jdbcType=INTEGER}
       )
-     ON CONFLICT ON CONSTRAINT stock_quote_unique DO NOTHING
+     ON CONFLICT ON CONSTRAINT stock_quote_unique DO 
+     UPDATE SET open=#{open,jdbcType=DOUBLE}, close=#{close,jdbcType=DOUBLE}, high=#{high,jdbcType=DOUBLE}, 
+     low=#{low,jdbcType=DOUBLE}, volume=#{volume,jdbcType=INTEGER}
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.maple.profitsystem.models.StockQuoteModel" useGeneratedKeys="true">
     <!--
